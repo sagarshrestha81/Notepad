@@ -1,28 +1,26 @@
-package calc;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import java.io.File;
+import java.io.FileWriter;  
+
 @SuppressWarnings("serial")
-public class Notepad extends JFrame {
-	@SuppressWarnings("null")
-	public MenuDemo() {
+public class MainClass extends JFrame {
+	public MainClass() {
 		setTitle("Notepad");
-		JFrame frame;
 		JTextArea textArea = new JTextArea(100, 100);
 		add(textArea);
-		
 		JScrollPane scrollText = new JScrollPane(textArea);
 		add(scrollText);
 
@@ -35,12 +33,38 @@ public class Notepad extends JFrame {
 		JMenuItem newMenuItem = new JMenuItem("New");
 		newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		fileMenu.add(newMenuItem);
+		newMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+
+			}
+
+		});
 		JMenuItem openMenuItem = new JMenuItem("Open...");
 		openMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
 		fileMenu.add(openMenuItem);
 		JMenuItem saveMenuItem = new JMenuItem("Save");
 		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		fileMenu.add(saveMenuItem);
+		saveMenuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 
+				
+			try {
+				           FileWriter fw=new FileWriter("D:\\testout.txt");    
+				           fw.write(textArea.getText());    
+				           fw.close();    
+				          }catch(Exception eq){System.out.println(eq);}    
+				          System.out.println("Success...");   
+				  
+				    
+			}
+
+		});
 		JMenuItem saveAsMenuItem = new JMenuItem("Save As...");
 		fileMenu.add(saveAsMenuItem);
 		JMenuItem pageSetupMenuItem = new JMenuItem("Page Setup...");
@@ -75,12 +99,13 @@ public class Notepad extends JFrame {
 		pasteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
 		editMenu.add(pasteMenuItem);
 		JMenuItem deleteMenuItem = new JMenuItem("Delete");
+		deleteMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE,0));
 		editMenu.add(deleteMenuItem);
 		JMenuItem findMenuItem = new JMenuItem("Find...");
 		findMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, ActionEvent.CTRL_MASK));
 		editMenu.add(findMenuItem);
 		JMenuItem findNextMenuItem = new JMenuItem("Find Next");
-		findNextMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, ActionEvent.CTRL_MASK));
+		findNextMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3,0));
 		editMenu.add(findNextMenuItem);
 		JMenuItem replaceMenuItem = new JMenuItem("Replace...");
 		replaceMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
@@ -92,7 +117,7 @@ public class Notepad extends JFrame {
 		selectAllMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
 		editMenu.add(selectAllMenuItem);
 		JMenuItem TimeDateMenuItem = new JMenuItem("Time/Date");
-		TimeDateMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, ActionEvent.CTRL_MASK));
+		TimeDateMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5,0));
 		editMenu.add(TimeDateMenuItem);
 
 		// Format Menu
@@ -125,12 +150,11 @@ public class Notepad extends JFrame {
 		setSize(550, 700);
 		setVisible(true);
 		
-
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args){
 
-		new MenuDemo();
+		new MainClass();
 
 	}
 
